@@ -1,0 +1,41 @@
+# Main site - Vectorization Tool
+zachhixson.me {
+    # API requests go to backend
+    handle /api/* {
+        reverse_proxy backend:8001
+    }
+
+    # Everything else goes to frontend
+    handle {
+        reverse_proxy vectorization-frontend:80
+    }
+}
+
+# Alias for www
+www.zachhixson.me {
+    redir https://zachhixson.me{uri}
+}
+
+# Assignment Calendar on subdomain
+calendar.zachhixson.me {
+    # API requests go to backend
+    handle /api/* {
+        reverse_proxy backend:8001
+    }
+
+    # Everything else goes to calendar frontend
+    handle {
+        reverse_proxy calendar-frontend:80
+    }
+}
+
+# Alternative: vectors subdomain for vectorization tool
+vectors.zachhixson.me {
+    handle /api/* {
+        reverse_proxy backend:8001
+    }
+
+    handle {
+        reverse_proxy vectorization-frontend:80
+    }
+}

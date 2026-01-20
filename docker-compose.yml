@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Reverse proxy with automatic HTTPS
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - backend
+      - vectorization-frontend
+      - calendar-frontend
+
+  # FastAPI Backend
+  backend:
+    build: ./vectorization-tool/backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - ENVIRONMENT=production
+      - ALLOWED_ORIGINS=https://zachhixson.me,https://vectors.zachhixson.me,https://calendar.zachhixson.me
+      - DB_PATH=/app/data/canvas_tracker.db
+      - CHROMA_PERSIST_DIR=/app/data/canvas_chroma_db
+    volumes:
+      - app_data:/app/data
+    expose:
+      - "8001"
+
+  # Vectorization Tool Frontend
+  vectorization-frontend:
+    build: ./vectorization-tool/frontend
+    restart: unless-stopped
+    expose:
+      - "80"
+
+  # Assignment Calendar Frontend
+  calendar-frontend:
+    build: ./assignment-calendar/frontend
+    restart: unless-stopped
+    expose:
+      - "80"
+
+volumes:
+  caddy_data:
+  caddy_config:
+  app_data:

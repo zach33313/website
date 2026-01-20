@@ -1,0 +1,26 @@
+# FastAPI and server
+fastapi==0.109.2
+uvicorn[standard]==0.27.1
+python-multipart==0.0.9
+python-dotenv==1.0.1
+
+# CORS and security
+slowapi==0.1.9
+pydantic-settings==2.2.1
+
+# AI/ML
+openai>=1.12.0
+chromadb>=0.4.22
+sentence-transformers>=2.3.1
+langchain>=0.1.9
+langchain-openai>=0.0.6
+langchain-community>=0.0.21
+
+# SSE streaming
+sse-starlette==2.0.0
+
+# CLI tools
+rich==13.7.0
+
+# PDF parsing (optional)
+pypdf==4.0.1

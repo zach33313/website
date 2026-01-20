@@ -1,0 +1,37 @@
+# FastAPI and server
+fastapi==0.109.2
+uvicorn[standard]==0.27.1
+python-multipart==0.0.9
+python-dotenv==1.0.1
+
+# CORS
+pydantic-settings==2.2.1
+
+# AI/ML
+openai>=1.12.0
+sentence-transformers>=2.3.1
+langchain>=0.1.9
+langchain-community>=0.0.21
+langchain-experimental>=0.0.50
+langchain-huggingface>=0.0.1
+
+# Dimensionality reduction
+scikit-learn>=1.4.0
+umap-learn>=0.5.5
+numpy>=1.26.4,<2.4
+
+# Document parsing
+pypdf>=4.0.1
+python-docx>=1.1.0
+python-pptx>=0.6.23
+markdown>=3.5.2
+
+# Vector database
+chromadb>=0.4.22
+
+# CLI and utilities
+rich>=13.7.0
+click>=8.1.7
+
+# Scheduling
+apscheduler>=3.10.0

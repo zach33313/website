@@ -1,0 +1,87 @@
+/* Global Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Cyberpunk Matrix Green Color Palette */
+  --matrix-green: #00ff41;
+  --matrix-green-dim: #00cc33;
+  --matrix-green-glow: rgba(0, 255, 65, 0.6);
+  --matrix-green-faint: rgba(0, 255, 65, 0.15);
+  --background-black: #000000;
+  --background-dark: #0a0a0a;
+  --text-green: #00ff41;
+  --text-white: #ffffff;
+
+  /* Animation Timing */
+  --morph-duration: 0.8s;
+  --rotation-duration: 20s;
+  --hover-transition: 0.3s;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--background-black);
+  color: var(--text-green);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--matrix-green-dim);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--matrix-green);
+}
+
+/* Selection Color */
+::selection {
+  background: var(--matrix-green);
+  color: var(--background-black);
+}
+
+/* Utility Classes */
+.glow-text {
+  text-shadow: 0 0 10px var(--matrix-green-glow),
+               0 0 20px var(--matrix-green-glow),
+               0 0 30px var(--matrix-green-glow);
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  z-index: 9999;
+  opacity: 0.3;
+}

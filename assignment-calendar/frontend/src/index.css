@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+/* Prose customization for markdown */
+.prose {
+  --tw-prose-body: #a0a0a0;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-links: #38bdf8;
+  --tw-prose-bold: #ffffff;
+  --tw-prose-code: #f472b6;
+  --tw-prose-pre-code: #a0a0a0;
+  --tw-prose-pre-bg: #141414;
+  --tw-prose-quotes: #6a6a6a;
+  --tw-prose-quote-borders: #2a2a2a;
+  --tw-prose-counters: #6a6a6a;
+  --tw-prose-bullets: #6a6a6a;
+  --tw-prose-hr: #2a2a2a;
+  --tw-prose-th-borders: #2a2a2a;
+  --tw-prose-td-borders: #1a1a1a;
+}
+
+.prose pre {
+  background-color: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 0.5rem;
+}
+
+.prose code {
+  background-color: #1a1a1a;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* KaTeX math rendering styles */
+.katex {
+  font-size: 1.1em;
+  color: #e0e0e0;
+}
+
+.katex-display {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.katex-display > .katex {
+  color: #ffffff;
+}
+
+/* Inline math styling */
+.prose p .katex,
+.prose li .katex {
+  padding: 0.1rem 0.2rem;
+  background-color: rgba(56, 189, 248, 0.1);
+  border-radius: 0.25rem;
+}
+
+/* Study guide and solution content specific styles */
+.study-guide-content h1,
+.study-guide-content h2,
+.study-guide-content h3,
+.solution-content h1,
+.solution-content h2,
+.solution-content h3 {
+  color: #ffffff;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.study-guide-content h1,
+.solution-content h1 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 0.5rem;
+}
+
+.study-guide-content h2,
+.solution-content h2 {
+  font-size: 1.25rem;
+  color: #38bdf8;
+}
+
+.study-guide-content h3,
+.solution-content h3 {
+  font-size: 1.1rem;
+  color: #a0a0a0;
+}
+
+/* Lists in study guides */
+.study-guide-content ul,
+.study-guide-content ol,
+.solution-content ul,
+.solution-content ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.study-guide-content li,
+.solution-content li {
+  margin: 0.5rem 0;
+}
+
+/* Blockquotes for important notes */
+.study-guide-content blockquote,
+.solution-content blockquote {
+  border-left: 3px solid #38bdf8;
+  background-color: rgba(56, 189, 248, 0.1);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+/* Tables */
+.study-guide-content table,
+.solution-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.study-guide-content th,
+.study-guide-content td,
+.solution-content th,
+.solution-content td {
+  border: 1px solid #2a2a2a;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.study-guide-content th,
+.solution-content th {
+  background-color: #1a1a1a;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.study-guide-content tr:nth-child(even),
+.solution-content tr:nth-child(even) {
+  background-color: #0f0f0f;
+}

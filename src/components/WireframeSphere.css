@@ -1,0 +1,60 @@
+.wireframe-sphere {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.4));
+}
+
+/* Draggable sphere - enable pointer events */
+.wireframe-sphere.draggable {
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.wireframe-sphere.draggable:active {
+  cursor: grabbing;
+}
+
+/* Inside mode - render behind content */
+.wireframe-sphere.inside-mode {
+  z-index: -1;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 65, 0.2));
+  opacity: 0.15;
+}
+
+/* Zooming mode - full viewport for transition */
+.wireframe-sphere.zooming {
+  top: 0;
+  left: 0;
+  transform: none;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Glow animation for the sphere container */
+@keyframes sphere-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(0, 255, 65, 0.6));
+  }
+}
+
+.wireframe-sphere:not(.inside-mode) {
+  animation: sphere-pulse 4s ease-in-out infinite;
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+  .wireframe-sphere {
+    max-width: 80vw;
+    max-height: 80vw;
+  }
+}
