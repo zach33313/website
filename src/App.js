@@ -134,7 +134,7 @@ const AIML_PROJECTS = [
     id: 1,
     name: 'Vectorization Insight Tool',
     description: 'Interactive visualization of text chunking, embeddings, and vector similarity for RAG pipelines',
-    url: '/vectorization-tool'
+    url: 'https://vectors.zachhixson.me'
   },
   { id: 2, name: 'AI Project 2', description: 'Description coming soon' },
   { id: 3, name: 'AI Project 3', description: 'Description coming soon' },
