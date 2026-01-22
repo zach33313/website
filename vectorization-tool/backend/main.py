@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from config import get_settings
 from routers import documents, chunking, embeddings, visualization, export, batch
-from routers import assignments, calendar, cron
+from routers import assignments, calendar, cron, chat
 from services.database_service import DatabaseService
 from services.scheduler_service import SchedulerService
 from services.job_handlers import JobHandlers
@@ -87,6 +87,9 @@ app.include_router(batch.router, prefix="/api/batch", tags=["Batch Processing"])
 app.include_router(assignments.router, prefix="/api/assignments", tags=["Assignments"])
 app.include_router(calendar.router, prefix="/api/calendar", tags=["Calendar"])
 app.include_router(cron.router, prefix="/api/cron", tags=["Cron Jobs"])
+
+# Portfolio Assistant chat
+app.include_router(chat.router, prefix="/api", tags=["Chat"])
 
 
 @app.get("/health")
