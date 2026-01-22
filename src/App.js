@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import WireframeSphere from './components/WireframeSphere';
-import StandingPerson from './components/StandingPerson';
+import StickFigure3D from './components/StickFigure3D';
 import InsideSphereBackground from './components/InsideSphereBackground';
-import ChatWidget from './components/ChatWidget';
 import './App.css';
 
 // Section data configuration - Resume sections only (projects shown via buttons on landing)
@@ -600,8 +599,11 @@ function App() {
         isZooming={isEnteringGlobe || isExitingGlobe}
       />
 
-      {/* Standing person in bottom left corner */}
-      <StandingPerson visible={!scrolled && !expandedSection && !showInsideBackground && !isEnteringGlobe} />
+      {/* Wireframe stick figure walking around */}
+      <StickFigure3D
+        visible={!scrolled && !expandedSection && !showInsideBackground && !isEnteringGlobe}
+        screenBounds={{ left: 80, right: Math.min(window.innerWidth * 0.35, 450) }}
+      />
 
       {/* Back to Globe button removed - exit via scroll instead */}
 
@@ -742,8 +744,6 @@ function App() {
         Experience
       </div>
 
-      {/* AI Chat Widget */}
-      <ChatWidget />
     </div>
   );
 }
