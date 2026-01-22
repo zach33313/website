@@ -30,7 +30,7 @@ services:
       - CHROMA_PERSIST_DIR=/app/data/canvas_chroma_db
     volumes:
       - app_data:/app/data
-      - chroma_data:/app/chroma_db
+      - ./data/chroma_db:/app/chroma_db
     expose:
       - "8001"
 
@@ -52,4 +52,3 @@ volumes:
   caddy_data:
   caddy_config:
   app_data:
-  chroma_data:

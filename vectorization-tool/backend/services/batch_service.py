@@ -603,3 +603,114 @@ class BatchService:
         Returns detailed detection info including scores and reasoning.
         """
         return ContentTypeDetector.get_detection_details(filename, content, file_path)
+
+    def export_collection(
+        self,
+        collection_name: str,
+        persist_directory: str
+    ) -> Dict[str, Any]:
+        """
+        Export a collection to a JSON-serializable dict.
+
+        Includes all documents, embeddings, and metadata for backup/restore.
+        """
+        client = self._get_chroma_client(persist_directory)
+
+        try:
+            collection = client.get_collection(collection_name)
+        except Exception:
+            raise ValueError(f"Collection '{collection_name}' not found")
+
+        # Get all data from collection
+        all_data = collection.get(
+            include=["documents", "embeddings", "metadatas"]
+        )
+
+        return {
+            "collection_name": collection_name,
+            "metadata": collection.metadata,
+            "count": len(all_data.get("ids", [])),
+            "ids": all_data.get("ids", []),
+            "documents": all_data.get("documents", []),
+            "embeddings": all_data.get("embeddings", []),
+            "metadatas": all_data.get("metadatas", []),
+        }
+
+    def import_collection(
+        self,
+        collection_name: str,
+        data: Dict[str, Any],
+        persist_directory: str,
+        overwrite: bool = False
+    ) -> Dict[str, Any]:
+        """
+        Import a collection from exported JSON data.
+
+        Args:
+            collection_name: Name for the collection
+            data: Exported data dict with ids, documents, embeddings, metadatas
+            persist_directory: ChromaDB directory
+            overwrite: If True, replace existing collection
+
+        Returns:
+            Dict with import results
+        """
+        client = self._get_chroma_client(persist_directory)
+
+        # Check if collection exists
+        existing = None
+        try:
+            existing = client.get_collection(collection_name)
+        except Exception:
+            pass
+
+        if existing and not overwrite:
+            raise ValueError(f"Collection '{collection_name}' already exists. Use overwrite=True to replace.")
+
+        if existing and overwrite:
+            client.delete_collection(collection_name)
+
+        # Create collection with metadata
+        collection = client.get_or_create_collection(
+            name=collection_name,
+            metadata=data.get("metadata", {"hnsw:space": "cosine"})
+        )
+
+        # Import data
+        ids = data.get("ids", [])
+        documents = data.get("documents", [])
+        embeddings = data.get("embeddings", [])
+        metadatas = data.get("metadatas", [])
+
+        if not ids:
+            return {
+                "success": True,
+                "collection_name": collection_name,
+                "imported": 0,
+                "message": "No data to import"
+            }
+
+        # Add in batches to avoid memory issues
+        batch_size = 500
+        imported = 0
+
+        for i in range(0, len(ids), batch_size):
+            batch_ids = ids[i:i+batch_size]
+            batch_docs = documents[i:i+batch_size] if documents else None
+            batch_embeds = embeddings[i:i+batch_size] if embeddings else None
+            batch_metas = metadatas[i:i+batch_size] if metadatas else None
+
+            collection.add(
+                ids=batch_ids,
+                documents=batch_docs,
+                embeddings=batch_embeds,
+                metadatas=batch_metas
+            )
+            imported += len(batch_ids)
+
+        return {
+            "success": True,
+            "collection_name": collection_name,
+            "imported": imported,
+            "message": f"Successfully imported {imported} documents"
+        }

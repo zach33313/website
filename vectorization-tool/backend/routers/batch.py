@@ -298,3 +298,45 @@ async def get_supported_formats():
             {"extension": ".docx", "description": "Word documents"},
         ]
     }
+
+
+@router.post("/export/{collection_name}")
+async def export_collection(
+    collection_name: str,
+    req: Request,
+    persist_directory: str = "./chroma_db"
+):
+    """
+    Export a collection to JSON format.
+
+    Returns all documents, embeddings, and metadata for backup/restore.
+    """
+    service = _get_service(req)
+
+    try:
+        export_data = service.export_collection(collection_name, persist_directory)
+        return export_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
+
+
+@router.post("/import/{collection_name}")
+async def import_collection(
+    collection_name: str,
+    req: Request,
+    data: dict,
+    persist_directory: str = "./chroma_db",
+    overwrite: bool = False
+):
+    """
+    Import a collection from exported JSON data.
+
+    If overwrite=True, replaces existing collection. Otherwise fails if exists.
+    """
+    service = _get_service(req)
+
+    try:
+        result = service.import_collection(collection_name, data, persist_directory, overwrite)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
