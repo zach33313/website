@@ -2,20 +2,25 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies for document parsing
+# Install system dependencies and uv
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    curl \
+    && curl -LsSf https://astral.sh/uv/install.sh | sh \
     && rm -rf /var/lib/apt/lists/*
+
+# Add uv to PATH
+ENV PATH="/root/.local/bin:$PATH"
 
 # Copy requirements first for better caching
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copy application code
 COPY . .
 
 # Create data directories
-RUN mkdir -p /app/data /app/canvas_chroma_db
+RUN mkdir -p /app/data /app/chroma_db
 
 # Expose port
 EXPOSE 8001
